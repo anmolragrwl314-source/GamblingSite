@@ -614,39 +614,65 @@
     <!-- =========================
          ADD FUNDS MODAL
     ========================== -->
-    <div class="modal-overlay" id="fundsModal">
+<!-- =========================
+     ADD FUNDS / DEPOSIT MODAL
+========================= -->
+<div class="modal-overlay" id="fundsModal">
 
-        <div class="modal">
+    <div class="modal">
 
-            <button class="modal-close" id="closeFundsModal">
-                ×
-            </button>
+        <button class="modal-close" id="closeFundsModal">
+            ×
+        </button>
 
-            <div class="modal-icon">
-                $
+        <div class="modal-icon">
+            ₹
+        </div>
+
+        <h2>Add Money</h2>
+
+        <p>
+            Add money securely using Razorpay.
+            Payments are processed through the payment gateway.
+        </p>
+
+        <div class="demo-input">
+
+            <label for="demoAmount">
+                Amount
+            </label>
+
+            <div class="input-box">
+                <span>₹</span>
+
+                <input
+                    type="number"
+                    id="demoAmount"
+                    value="100"
+                    min="10"
+                    max="100000"
+                    step="1"
+                    inputmode="numeric"
+                >
             </div>
 
-            <h2>Demo balance</h2>
+            <small>
+                Minimum ₹10 · Maximum ₹100,000
+            </small>
 
-            <p>
-                This is a front-end demo. No real-money transaction will be processed.
-            </p>
+        </div>
 
-            <div class="demo-input">
+        <button
+            class="primary-btn modal-btn"
+            id="demoAddBtn"
+            type="button"
+        >
+            Continue to Payment
+        </button>
 
-                <label>Amount</label>
+    </div>
 
-                <div class="input-box">
-                    <span>$</span>
-                    <input
-                        type="number"
-                        id="demoAmount"
-                        value="100"
-                        min="1"
-                    >
-                </div>
-
-            </div>
+</div>
 
             <button class="primary-btn modal-btn" id="demoAddBtn">
                 Add demo funds
