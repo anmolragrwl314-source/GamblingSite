@@ -1,840 +1,681 @@
-```javascript
-/* =========================================================
-   NOVABET DASHBOARD
-   Frontend interactions
-========================================================= */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Betya — Account Dashboard</title>
 
-document.addEventListener("DOMContentLoaded", () => {
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    const sidebar = document.getElementById("sidebar");
+<body>
 
-    const mobileMenu =
-        document.getElementById("mobileMenu");
+    <!-- =========================
+         MOBILE OVERLAY
+    ========================== -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    const navItems =
-        document.querySelectorAll(".nav-item");
 
-    const pages =
-        document.querySelectorAll(".page");
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+    <aside class="sidebar" id="sidebar">
 
-    const breadcrumbTitle =
-        document.getElementById("breadcrumbTitle");
+        <div class="sidebar-top">
 
-    const pageTitle =
-        document.getElementById("pageTitle");
+            <a href="#" class="brand">
+                <span class="brand-icon">B</span>
+                <span class="brand-name">BETYA</span>
+            </a>
 
-    const pageDescription =
-        document.getElementById("pageDescription");
+            <button class="close-sidebar" id="closeSidebar">
+                ×
+            </button>
 
-    const userButton =
-        document.getElementById("userButton");
+        </div>
 
-    const userDropdown =
-        document.getElementById("userDropdown");
 
-    const notificationBtn =
-        document.getElementById("notificationBtn");
+        <nav class="navigation">
 
-    const refreshBtn =
-        document.getElementById("refreshBtn");
+            <a href="#" class="nav-item active">
+                <span class="nav-icon">⌂</span>
+                <span>Overview</span>
+            </a>
 
-    const depositBtn =
-        document.getElementById("depositBtn");
+            <a href="#" class="nav-item">
+                <span class="nav-icon">◈</span>
+                <span>My Bets</span>
+                <span class="nav-badge">3</span>
+            </a>
 
-    const supportBtn =
-        document.getElementById("supportBtn");
+            <a href="#" class="nav-item">
+                <span class="nav-icon">↔</span>
+                <span>Transactions</span>
+            </a>
 
-    const logoutBtn =
-        document.getElementById("logoutBtn");
+            <a href="#" class="nav-item">
+                <span class="nav-icon">🎁</span>
+                <span>Rewards</span>
+            </a>
 
-    const dropdownLogout =
-        document.getElementById("dropdownLogout");
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
 
-    const viewActivity =
-        document.getElementById("viewActivity");
+        </nav>
 
-    const editProfile =
-        document.getElementById("editProfile");
 
-    const quickActions =
-        document.querySelectorAll(".quick-action");
+        <div class="sidebar-bottom">
 
-    const toast =
-        document.getElementById("toast");
+            <div class="help-card">
+                <div class="help-icon">?</div>
 
-    const toastTitle =
-        document.getElementById("toastTitle");
+                <div>
+                    <strong>Need help?</strong>
+                    <p>We're here for you.</p>
+                </div>
+            </div>
 
-    const toastMessage =
-        document.getElementById("toastMessage");
+            <button class="logout-btn" id="logoutBtn">
+                <span>↪</span>
+                Log out
+            </button>
 
-    const closeToast =
-        document.getElementById("closeToast");
+        </div>
 
-    const modal =
-        document.getElementById("modal");
+    </aside>
 
-    const modalClose =
-        document.getElementById("modalClose");
 
-    const modalConfirm =
-        document.getElementById("modalConfirm");
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <main class="main-content">
 
-    const modalTitle =
-        document.getElementById("modalTitle");
+        <!-- HEADER -->
+        <header class="topbar">
 
-    const modalDescription =
-        document.getElementById("modalDescription");
+            <button class="menu-button" id="menuButton">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-    const amountInput =
-        document.getElementById("amountInput");
 
+            <div class="topbar-left">
+                <div class="page-title">
+                    Account overview
+                </div>
+            </div>
 
-    /* =====================================================
-       PAGE DATA
-    ===================================================== */
 
-    const pageData = {
+            <div class="topbar-right">
 
-        overview: {
+                <button class="notification-btn" id="notificationBtn">
+                    ♢
+                    <span class="notification-dot"></span>
+                </button>
 
-            title: "Welcome back, Alex",
+                <div class="profile-menu">
 
-            description:
-                "Here's what's happening with your account today."
+                    <button class="profile-button" id="profileButton">
 
-        },
+                        <div class="avatar">
+                            AR
+                        </div>
 
-        activity: {
+                        <div class="profile-info">
+                            <strong>Alex Roberts</strong>
+                            <span>Premium member</span>
+                        </div>
 
-            title: "Activity",
+                        <span class="profile-arrow">⌄</span>
 
-            description:
-                "Review your recent account activity."
+                    </button>
 
-        },
 
-        wallet: {
+                    <div class="profile-dropdown" id="profileDropdown">
 
-            title: "Wallet",
+                        <a href="#">
+                            <span>👤</span>
+                            Profile
+                        </a>
 
-            description:
-                "Manage your balance and transactions."
+                        <a href="#">
+                            <span>⚙</span>
+                            Settings
+                        </a>
 
-        },
+                        <a href="#">
+                            <span>?</span>
+                            Help center
+                        </a>
 
-        rewards: {
+                        <div class="dropdown-divider"></div>
 
-            title: "Rewards",
+                        <button id="dropdownLogout">
+                            <span>↪</span>
+                            Log out
+                        </button>
 
-            description:
-                "Track your rewards and membership benefits."
+                    </div>
 
-        },
+                </div>
 
-        profile: {
+            </div>
 
-            title: "Your profile",
+        </header>
 
-            description:
-                "Manage your personal information."
 
-        },
+        <!-- =========================
+             PAGE
+        ========================== -->
+        <section class="dashboard">
 
-        security: {
+            <!-- WELCOME -->
+            <div class="welcome-section">
 
-            title: "Security",
+                <div>
+                    <p class="eyebrow">YOUR ACCOUNT</p>
 
-            description:
-                "Keep your account safe and protected."
+                    <h1>
+                        Welcome back, Alex
+                        <span>👋</span>
+                    </h1>
 
-        },
+                    <p class="welcome-text">
+                        Here's a quick overview of your account activity.
+                    </p>
+                </div>
 
-        settings: {
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    Account active
+                </div>
 
-            title: "Settings",
+            </div>
 
-            description:
-                "Customize your dashboard experience."
 
-        }
+            <!-- =========================
+                 STAT CARDS
+            ========================== -->
+            <div class="stats-grid">
 
-    };
+                <div class="stat-card balance-card">
 
+                    <div class="stat-card-top">
 
-    /* =====================================================
-       NAVIGATION
-    ===================================================== */
+                        <div>
+                            <span class="stat-label">Available balance</span>
 
-    navItems.forEach(item => {
+                            <div class="balance-value">
+                                $2,480<span>.50</span>
+                            </div>
+                        </div>
 
-        item.addEventListener("click", event => {
+                        <div class="stat-icon balance-icon">
+                            $
+                        </div>
 
-            event.preventDefault();
+                    </div>
 
-            const page =
-                item.dataset.page;
+                    <div class="balance-actions">
 
-            showPage(page);
+                        <button class="primary-btn" id="addFundsBtn">
+                            + Add funds
+                        </button>
 
-            sidebar.classList.remove("open");
+                        <button class="secondary-btn">
+                            Withdraw
+                        </button>
 
-        });
+                    </div>
 
-    });
+                </div>
 
 
-    function showPage(pageName) {
+                <div class="stat-card">
 
-        navItems.forEach(item => {
+                    <div class="stat-card-top">
 
-            item.classList.toggle(
-                "active",
-                item.dataset.page === pageName
-            );
+                        <div>
+                            <span class="stat-label">Total bets</span>
 
-        });
+                            <div class="stat-number">
+                                128
+                            </div>
+                        </div>
 
+                        <div class="stat-icon">
+                            ◈
+                        </div>
 
-        pages.forEach(page => {
+                    </div>
 
-            page.classList.remove(
-                "active-page"
-            );
+                    <div class="stat-footer positive">
+                        <span>↑ 12.4%</span>
+                        <span>vs last month</span>
+                    </div>
 
-        });
+                </div>
 
 
-        const selectedPage =
-            document.getElementById(
-                `${pageName}Page`
-            );
+                <div class="stat-card">
 
+                    <div class="stat-card-top">
 
-        if (selectedPage) {
+                        <div>
+                            <span class="stat-label">Total winnings</span>
 
-            selectedPage.classList.add(
-                "active-page"
-            );
+                            <div class="stat-number">
+                                $8,942
+                            </div>
+                        </div>
 
-        }
+                        <div class="stat-icon winning-icon">
+                            ↗
+                        </div>
 
+                    </div>
 
-        const data =
-            pageData[pageName];
+                    <div class="stat-footer positive">
+                        <span>↑ 8.7%</span>
+                        <span>vs last month</span>
+                    </div>
 
+                </div>
 
-        if (data) {
 
-            pageTitle.textContent =
-                data.title;
+                <div class="stat-card">
 
-            pageDescription.textContent =
-                data.description;
+                    <div class="stat-card-top">
 
-            breadcrumbTitle.textContent =
-                pageName.charAt(0).toUpperCase()
-                + pageName.slice(1);
+                        <div>
+                            <span class="stat-label">Rewards points</span>
 
-        }
+                            <div class="stat-number">
+                                4,820
+                            </div>
+                        </div>
 
-    }
+                        <div class="stat-icon reward-icon">
+                            ★
+                        </div>
 
+                    </div>
 
-    /* =====================================================
-       MOBILE SIDEBAR
-    ===================================================== */
+                    <div class="stat-footer">
+                        <span>680 pts</span>
+                        <span>until next tier</span>
+                    </div>
 
-    mobileMenu.addEventListener(
-        "click",
-        () => {
+                </div>
 
-            sidebar.classList.toggle(
-                "open"
-            );
+            </div>
 
-        }
-    );
 
+            <!-- =========================
+                 CONTENT GRID
+            ========================== -->
+            <div class="content-grid">
 
-    /* =====================================================
-       USER DROPDOWN
-    ===================================================== */
 
-    userButton.addEventListener(
-        "click",
-        event => {
+                <!-- ACTIVITY -->
+                <div class="panel activity-panel">
 
-            event.stopPropagation();
+                    <div class="panel-header">
 
-            userDropdown.classList.toggle(
-                "show"
-            );
+                        <div>
+                            <h2>Recent activity</h2>
+                            <p>Your latest account transactions</p>
+                        </div>
 
-        }
-    );
+                        <button class="view-all-btn">
+                            View all →
+                        </button>
 
+                    </div>
 
-    document.addEventListener(
-        "click",
-        event => {
 
-            if (
-                !event.target.closest(
-                    ".user-menu"
-                )
-            ) {
+                    <div class="activity-list">
 
-                userDropdown.classList.remove(
-                    "show"
-                );
 
-            }
+                        <div class="activity-item">
 
-        }
-    );
+                            <div class="activity-icon deposit">
+                                ↓
+                            </div>
 
+                            <div class="activity-details">
 
-    /* =====================================================
-       TOAST
-    ===================================================== */
+                                <strong>Funds added</strong>
 
-    let toastTimer;
+                                <span>
+                                    Today, 10:42 AM
+                                </span>
 
+                            </div>
 
-    function showToast(
-        title,
-        message
-    ) {
+                            <div class="activity-amount positive">
+                                +$500.00
+                            </div>
 
-        toastTitle.textContent =
-            title;
+                        </div>
 
-        toastMessage.textContent =
-            message;
 
-        toast.classList.add(
-            "show"
-        );
+                        <div class="activity-item">
 
+                            <div class="activity-icon win">
+                                ✓
+                            </div>
 
-        clearTimeout(
-            toastTimer
-        );
+                            <div class="activity-details">
 
+                                <strong>Bet settled</strong>
 
-        toastTimer =
-            setTimeout(
-                () => {
+                                <span>
+                                    Yesterday, 8:21 PM
+                                </span>
 
-                    toast.classList.remove(
-                        "show"
-                    );
+                            </div>
 
-                },
-                3500
-            );
+                            <div class="activity-amount positive">
+                                +$245.50
+                            </div>
 
-    }
+                        </div>
 
 
-    closeToast.addEventListener(
-        "click",
-        () => {
+                        <div class="activity-item">
 
-            toast.classList.remove(
-                "show"
-            );
+                            <div class="activity-icon bet">
+                                ◈
+                            </div>
 
-        }
-    );
+                            <div class="activity-details">
 
+                                <strong>Bet placed</strong>
 
-    /* =====================================================
-       NOTIFICATION
-    ===================================================== */
+                                <span>
+                                    Yesterday, 7:45 PM
+                                </span>
 
-    notificationBtn.addEventListener(
-        "click",
-        () => {
+                            </div>
 
-            showToast(
-                "Notifications",
-                "You have 3 new account updates."
-            );
+                            <div class="activity-amount negative">
+                                -$50.00
+                            </div>
 
-        }
-    );
+                        </div>
 
 
-    /* =====================================================
-       REFRESH
-    ===================================================== */
+                        <div class="activity-item">
 
-    refreshBtn.addEventListener(
-        "click",
-        () => {
+                            <div class="activity-icon withdrawal">
+                                ↑
+                            </div>
 
-            const icon =
-                refreshBtn.querySelector(
-                    "i"
-                );
+                            <div class="activity-details">
 
+                                <strong>Withdrawal</strong>
 
-            icon.classList.add(
-                "fa-spin"
-            );
+                                <span>
+                                    2 days ago
+                                </span>
 
+                            </div>
 
-            setTimeout(
-                () => {
+                            <div class="activity-amount negative">
+                                -$300.00
+                            </div>
 
-                    icon.classList.remove(
-                        "fa-spin"
-                    );
+                        </div>
 
 
-                    showToast(
-                        "Dashboard refreshed",
-                        "Your account information is up to date."
-                    );
+                        <div class="activity-item">
 
-                },
-                800
-            );
+                            <div class="activity-icon reward">
+                                ★
+                            </div>
 
-        }
-    );
+                            <div class="activity-details">
 
+                                <strong>Reward credited</strong>
 
-    /* =====================================================
-       MODAL
-    ===================================================== */
+                                <span>
+                                    3 days ago
+                                </span>
 
-    function openModal(
-        type = "deposit"
-    ) {
+                            </div>
 
-        if (type === "deposit") {
+                            <div class="activity-amount points">
+                                +250 pts
+                            </div>
 
-            modalTitle.textContent =
-                "Add funds";
+                        </div>
 
-            modalDescription.textContent =
-                "Enter the amount you'd like to add.";
+                    </div>
 
-            modalConfirm.textContent =
-                "Continue";
+                </div>
 
-            document
-                .querySelector(".modal-icon i")
-                .className =
-                "fa-solid fa-wallet";
 
-        }
+                <!-- RIGHT COLUMN -->
+                <div class="right-column">
 
 
-        if (type === "withdraw") {
+                    <!-- PROFILE CARD -->
+                    <div class="panel profile-card">
 
-            modalTitle.textContent =
-                "Withdraw funds";
+                        <div class="profile-cover"></div>
 
-            modalDescription.textContent =
-                "Enter the amount you'd like to withdraw.";
+                        <div class="profile-card-content">
 
-            modalConfirm.textContent =
-                "Request withdrawal";
+                            <div class="large-avatar">
+                                AR
+                            </div>
 
-            document
-                .querySelector(".modal-icon i")
-                .className =
-                "fa-solid fa-arrow-up";
+                            <h3>Alex Roberts</h3>
 
-        }
+                            <p>alex.roberts@example.com</p>
 
+                            <div class="member-badge">
+                                ★ Premium
+                            </div>
 
-        amountInput.value = "";
+                            <div class="profile-meta">
 
-        modal.classList.add(
-            "show"
-        );
+                                <div>
+                                    <span>Member since</span>
+                                    <strong>Jan 2025</strong>
+                                </div>
 
+                                <div>
+                                    <span>Level</span>
+                                    <strong>Gold</strong>
+                                </div>
 
-        setTimeout(
-            () => {
+                            </div>
 
-                amountInput.focus();
+                            <button class="outline-full-btn">
+                                Manage profile
+                            </button>
 
-            },
-            200
-        );
+                        </div>
 
-    }
+                    </div>
 
 
-    function closeModal() {
+                    <!-- SECURITY -->
+                    <div class="panel security-card">
 
-        modal.classList.remove(
-            "show"
-        );
+                        <div class="panel-header compact">
 
-    }
+                            <div>
+                                <h2>Security</h2>
+                                <p>Keep your account protected</p>
+                            </div>
 
+                            <span class="secure-icon">
+                                ✓
+                            </span>
 
-    depositBtn.addEventListener(
-        "click",
-        () => {
+                        </div>
 
-            openModal(
-                "deposit"
-            );
 
-        }
-    );
+                        <div class="security-row">
 
+                            <div>
+                                <strong>Two-factor authentication</strong>
+                                <span>Extra security enabled</span>
+                            </div>
 
-    modalClose.addEventListener(
-        "click",
-        closeModal
-    );
+                            <div class="toggle active" id="securityToggle">
+                                <div class="toggle-circle"></div>
+                            </div>
 
+                        </div>
 
-    modal.addEventListener(
-        "click",
-        event => {
 
-            if (
-                event.target === modal
-            ) {
+                        <div class="security-row">
 
-                closeModal();
+                            <div>
+                                <strong>Email verification</strong>
+                                <span>Verified email address</span>
+                            </div>
 
-            }
+                            <span class="verified">
+                                Verified
+                            </span>
 
-        }
-    );
+                        </div>
 
+                    </div>
 
-    document.addEventListener(
-        "keydown",
-        event => {
+                </div>
 
-            if (
-                event.key === "Escape"
-            ) {
+            </div>
 
-                closeModal();
 
-            }
+            <!-- =========================
+                 RESPONSIBLE USE
+            ========================== -->
+            <div class="responsible-banner">
 
-        }
-    );
+                <div class="responsible-icon">
+                    ♥
+                </div>
 
+                <div>
+                    <strong>Play responsibly</strong>
 
-    modalConfirm.addEventListener(
-        "click",
-        () => {
+                    <p>
+                        Set limits and take breaks whenever you need them.
+                        This demo interface does not process real-money transactions.
+                    </p>
+                </div>
 
-            const amount =
-                Number(
-                    amountInput.value
-                );
+                <button>
+                    Learn more →
+                </button>
 
+            </div>
 
-            if (
-                !amount ||
-                amount <= 0
-            ) {
 
-                showToast(
-                    "Enter an amount",
-                    "Please enter a valid amount to continue."
-                );
+            <!-- FOOTER -->
+            <footer class="footer">
 
-                return;
+                <span>
+                    © 2026 Betya Demo
+                </span>
 
-            }
+                <div>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Support</a>
+                </div>
 
+            </footer>
 
-            const formatted =
-                new Intl.NumberFormat(
-                    "en-IN",
-                    {
-                        style: "currency",
-                        currency: "INR",
-                        maximumFractionDigits: 2
-                    }
-                ).format(
-                    amount
-                );
+        </section>
 
+    </main>
 
-            const isWithdraw =
-                modalTitle.textContent
-                === "Withdraw funds";
 
+    <!-- =========================
+         ADD FUNDS MODAL
+    ========================== -->
+    <div class="modal-overlay" id="fundsModal">
 
-            closeModal();
+        <div class="modal">
 
+            <button class="modal-close" id="closeFundsModal">
+                ×
+            </button>
 
-            showToast(
+            <div class="modal-icon">
+                $
+            </div>
 
-                isWithdraw
-                    ? "Withdrawal requested"
-                    : "Funds added",
+            <h2>Demo balance</h2>
 
-                isWithdraw
-                    ? `${formatted} withdrawal request created.`
-                    : `${formatted} has been added to your account.`
+            <p>
+                This is a front-end demo. No real-money transaction will be processed.
+            </p>
 
-            );
+            <div class="demo-input">
 
-        }
-    );
+                <label>Amount</label>
 
+                <div class="input-box">
+                    <span>$</span>
+                    <input
+                        type="number"
+                        id="demoAmount"
+                        value="100"
+                        min="1"
+                    >
+                </div>
 
-    /* =====================================================
-       QUICK ACTIONS
-    ===================================================== */
+            </div>
 
-    quickActions.forEach(
-        button => {
+            <button class="primary-btn modal-btn" id="demoAddBtn">
+                Add demo funds
+            </button>
 
-            button.addEventListener(
-                "click",
-                () => {
+        </div>
 
-                    const action =
-                        button.dataset.action;
+    </div>
 
 
-                    if (
-                        action === "deposit"
-                    ) {
+    <!-- =========================
+         TOAST
+    ========================== -->
+    <div class="toast" id="toast">
 
-                        openModal(
-                            "deposit"
-                        );
+        <div class="toast-icon">
+            ✓
+        </div>
 
-                    }
+        <div>
+            <strong id="toastTitle">Success</strong>
+            <p id="toastMessage">Action completed.</p>
+        </div>
 
+    </div>
 
-                    else if (
-                        action === "withdraw"
-                    ) {
 
-                        openModal(
-                            "withdraw"
-                        );
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
 
-                    }
-
-
-                    else if (
-                        action === "security"
-                    ) {
-
-                        showPage(
-                            "security"
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       VIEW ACTIVITY
-    ===================================================== */
-
-    viewActivity.addEventListener(
-        "click",
-        () => {
-
-            showPage(
-                "activity"
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       EDIT PROFILE
-    ===================================================== */
-
-    editProfile.addEventListener(
-        "click",
-        () => {
-
-            showPage(
-                "profile"
-            );
-
-            showToast(
-                "Profile",
-                "You can edit your information here."
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       SUPPORT
-    ===================================================== */
-
-    supportBtn.addEventListener(
-        "click",
-        () => {
-
-            showToast(
-                "Support",
-                "Our support team is available to help."
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
-
-    function logout() {
-
-        showToast(
-            "Demo logout",
-            "This is a frontend-only dashboard."
-        );
-
-    }
-
-
-    logoutBtn.addEventListener(
-        "click",
-        logout
-    );
-
-
-    dropdownLogout.addEventListener(
-        "click",
-        event => {
-
-            event.preventDefault();
-
-            logout();
-
-        }
-    );
-
-
-    /* =====================================================
-       PROFILE FORM
-    ===================================================== */
-
-    const settingsForm =
-        document.querySelector(
-            ".settings-form"
-        );
-
-
-    if (settingsForm) {
-
-        const saveButton =
-            settingsForm.querySelector(
-                ".primary-btn"
-            );
-
-
-        saveButton.addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "Profile saved",
-                    "Your profile changes have been saved locally."
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       SWITCHES
-    ===================================================== */
-
-    document
-        .querySelectorAll(
-            ".switch input"
-        )
-        .forEach(
-            checkbox => {
-
-                checkbox.addEventListener(
-                    "change",
-                    () => {
-
-                        showToast(
-                            "Preference updated",
-                            checkbox.checked
-                                ? "Notification enabled."
-                                : "Notification disabled."
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-    /* =====================================================
-       PROMO BUTTON
-    ===================================================== */
-
-    const promoButton =
-        document.querySelector(
-            ".promo-btn"
-        );
-
-
-    if (promoButton) {
-
-        promoButton.addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "Membership benefits",
-                    "More Gold membership benefits coming soon."
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       INITIAL STATE
-    ===================================================== */
-
-    showPage(
-        "overview"
-    );
-
-});
-```
-
+</body>
+</html>
