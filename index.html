@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +10,7 @@
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
@@ -16,156 +18,353 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-    <!-- =========================
+
+    <!-- =====================================================
          MOBILE OVERLAY
-    ========================== -->
-    <div class="mobile-overlay" id="mobileOverlay"></div>
+    ====================================================== -->
+
+    <div
+        class="mobile-overlay"
+        id="mobileOverlay"
+    ></div>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          SIDEBAR
-    ========================== -->
-    <aside class="sidebar" id="sidebar">
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
 
         <div class="sidebar-top">
 
-            <a href="#" class="brand">
-                <span class="brand-icon">B</span>
-                <span class="brand-name">BETYA</span>
+            <a
+                href="#"
+                class="brand"
+            >
+
+                <span class="brand-icon">
+                    B
+                </span>
+
+                <span class="brand-name">
+                    BETYA
+                </span>
+
             </a>
 
-            <button class="close-sidebar" id="closeSidebar">
+
+            <button
+                class="close-sidebar"
+                id="closeSidebar"
+                type="button"
+                aria-label="Close menu"
+            >
                 ×
             </button>
 
         </div>
 
 
+
         <nav class="navigation">
 
-            <a href="#" class="nav-item active">
-                <span class="nav-icon">⌂</span>
-                <span>Overview</span>
+
+            <a
+                href="#"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Overview
+                </span>
+
             </a>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">◈</span>
-                <span>My Bets</span>
-                <span class="nav-badge">3</span>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◈
+                </span>
+
+                <span>
+                    My Bets
+                </span>
+
+                <span class="nav-badge">
+                    3
+                </span>
+
             </a>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">↔</span>
-                <span>Transactions</span>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ↔
+                </span>
+
+                <span>
+                    Transactions
+                </span>
+
             </a>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🎁</span>
-                <span>Rewards</span>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🎁
+                </span>
+
+                <span>
+                    Rewards
+                </span>
+
             </a>
 
-            <a href="#" class="nav-item">
-                <span class="nav-icon">⚙</span>
-                <span>Settings</span>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span>
+                    Settings
+                </span>
+
             </a>
+
 
         </nav>
 
 
+
         <div class="sidebar-bottom">
 
+
             <div class="help-card">
-                <div class="help-icon">?</div>
+
+                <div class="help-icon">
+                    ?
+                </div>
 
                 <div>
-                    <strong>Need help?</strong>
-                    <p>We're here for you.</p>
+
+                    <strong>
+                        Need help?
+                    </strong>
+
+                    <p>
+                        We're here for you.
+                    </p>
+
                 </div>
+
             </div>
 
-            <button class="logout-btn" id="logoutBtn">
-                <span>↪</span>
+
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+
+                <span>
+                    ↪
+                </span>
+
                 Log out
+
             </button>
+
 
         </div>
 
     </aside>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          MAIN CONTENT
-    ========================== -->
+    ====================================================== -->
+
     <main class="main-content">
 
-        <!-- HEADER -->
+
+        <!-- =================================================
+             TOP HEADER
+        ================================================== -->
+
         <header class="topbar">
 
-            <button class="menu-button" id="menuButton">
+
+            <button
+                class="menu-button"
+                id="menuButton"
+                type="button"
+                aria-label="Open menu"
+            >
+
                 <span></span>
                 <span></span>
                 <span></span>
+
             </button>
 
 
+
             <div class="topbar-left">
+
                 <div class="page-title">
                     Account overview
                 </div>
+
             </div>
+
 
 
             <div class="topbar-right">
 
-                <button class="notification-btn" id="notificationBtn">
+
+                <!-- Notifications -->
+
+                <button
+                    class="notification-btn"
+                    id="notificationBtn"
+                    type="button"
+                    aria-label="Notifications"
+                >
+
                     ♢
+
                     <span class="notification-dot"></span>
+
                 </button>
+
+
+
+                <!-- Profile -->
 
                 <div class="profile-menu">
 
-                    <button class="profile-button" id="profileButton">
+
+                    <button
+                        class="profile-button"
+                        id="profileButton"
+                        type="button"
+                    >
 
                         <div class="avatar">
                             AR
                         </div>
 
+
                         <div class="profile-info">
-                            <strong>Alex Roberts</strong>
-                            <span>Premium member</span>
+
+                            <strong>
+                                Alex Roberts
+                            </strong>
+
+                            <span>
+                                Premium member
+                            </span>
+
                         </div>
 
-                        <span class="profile-arrow">⌄</span>
+
+                        <span class="profile-arrow">
+                            ⌄
+                        </span>
 
                     </button>
 
 
-                    <div class="profile-dropdown" id="profileDropdown">
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
 
                         <a href="#">
-                            <span>👤</span>
+
+                            <span>
+                                👤
+                            </span>
+
                             Profile
+
                         </a>
 
+
                         <a href="#">
-                            <span>⚙</span>
+
+                            <span>
+                                ⚙
+                            </span>
+
                             Settings
+
                         </a>
 
+
                         <a href="#">
-                            <span>?</span>
+
+                            <span>
+                                ?
+                            </span>
+
                             Help center
+
                         </a>
+
 
                         <div class="dropdown-divider"></div>
 
-                        <button id="dropdownLogout">
-                            <span>↪</span>
+
+                        <button
+                            id="dropdownLogout"
+                            type="button"
+                        >
+
+                            <span>
+                                ↪
+                            </span>
+
                             Log out
+
                         </button>
 
                     </div>
@@ -177,188 +376,342 @@
         </header>
 
 
-        <!-- =========================
-             PAGE
-        ========================== -->
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
         <section class="dashboard">
 
-            <!-- WELCOME -->
+
+
+            <!-- =================================================
+                 WELCOME SECTION
+            ================================================== -->
+
             <div class="welcome-section">
 
+
                 <div>
-                    <p class="eyebrow">YOUR ACCOUNT</p>
+
+                    <p class="eyebrow">
+                        YOUR ACCOUNT
+                    </p>
+
 
                     <h1>
+
                         Welcome back, Alex
-                        <span>👋</span>
+
+                        <span>
+                            👋
+                        </span>
+
                     </h1>
+
 
                     <p class="welcome-text">
                         Here's a quick overview of your account activity.
                     </p>
+
                 </div>
 
+
+
                 <div class="status-pill">
+
                     <span class="status-dot"></span>
+
                     Account active
+
                 </div>
+
 
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================================
                  STAT CARDS
-            ========================== -->
+            ================================================== -->
+
             <div class="stats-grid">
+
+
+
+                <!-- BALANCE -->
 
                 <div class="stat-card balance-card">
 
+
                     <div class="stat-card-top">
 
+
                         <div>
-                            <span class="stat-label">Available balance</span>
+
+                            <span class="stat-label">
+                                Available balance
+                            </span>
+
 
                             <div class="balance-value">
                                 $2,480<span>.50</span>
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon balance-icon">
                             $
                         </div>
 
+
                     </div>
+
+
 
                     <div class="balance-actions">
 
-                        <button class="primary-btn" id="addFundsBtn">
+
+                        <!-- ADD FUNDS -->
+
+                        <button
+                            class="primary-btn"
+                            id="addFundsBtn"
+                            type="button"
+                        >
+
                             + Add funds
+
                         </button>
 
-                        <button class="secondary-btn">
+
+
+                        <!-- WITHDRAW -->
+
+                        <button
+                            class="secondary-btn"
+                            id="withdrawBtn"
+                            type="button"
+                        >
+
                             Withdraw
+
                         </button>
+
 
                     </div>
 
                 </div>
 
 
+
+                <!-- TOTAL BETS -->
+
                 <div class="stat-card">
+
 
                     <div class="stat-card-top">
 
+
                         <div>
-                            <span class="stat-label">Total bets</span>
+
+                            <span class="stat-label">
+                                Total bets
+                            </span>
+
 
                             <div class="stat-number">
                                 128
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon">
                             ◈
                         </div>
 
+
                     </div>
 
+
                     <div class="stat-footer positive">
-                        <span>↑ 12.4%</span>
-                        <span>vs last month</span>
+
+                        <span>
+                            ↑ 12.4%
+                        </span>
+
+                        <span>
+                            vs last month
+                        </span>
+
                     </div>
+
 
                 </div>
 
 
+
+                <!-- WINNINGS -->
+
                 <div class="stat-card">
+
 
                     <div class="stat-card-top">
 
+
                         <div>
-                            <span class="stat-label">Total winnings</span>
+
+                            <span class="stat-label">
+                                Total winnings
+                            </span>
+
 
                             <div class="stat-number">
                                 $8,942
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon winning-icon">
                             ↗
                         </div>
 
+
                     </div>
 
+
                     <div class="stat-footer positive">
-                        <span>↑ 8.7%</span>
-                        <span>vs last month</span>
+
+                        <span>
+                            ↑ 8.7%
+                        </span>
+
+                        <span>
+                            vs last month
+                        </span>
+
                     </div>
+
 
                 </div>
 
 
+
+                <!-- REWARDS -->
+
                 <div class="stat-card">
+
 
                     <div class="stat-card-top">
 
+
                         <div>
-                            <span class="stat-label">Rewards points</span>
+
+                            <span class="stat-label">
+                                Rewards points
+                            </span>
+
 
                             <div class="stat-number">
                                 4,820
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon reward-icon">
                             ★
                         </div>
 
+
                     </div>
+
 
                     <div class="stat-footer">
-                        <span>680 pts</span>
-                        <span>until next tier</span>
+
+                        <span>
+                            680 pts
+                        </span>
+
+                        <span>
+                            until next tier
+                        </span>
+
                     </div>
 
+
                 </div>
+
 
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================================
                  CONTENT GRID
-            ========================== -->
+            ================================================== -->
+
             <div class="content-grid">
 
 
-                <!-- ACTIVITY -->
+
+                <!-- =================================================
+                     ACTIVITY
+                ================================================== -->
+
                 <div class="panel activity-panel">
+
 
                     <div class="panel-header">
 
+
                         <div>
-                            <h2>Recent activity</h2>
-                            <p>Your latest account transactions</p>
+
+                            <h2>
+                                Recent activity
+                            </h2>
+
+                            <p>
+                                Your latest account transactions
+                            </p>
+
                         </div>
 
-                        <button class="view-all-btn">
+
+                        <button
+                            class="view-all-btn"
+                            type="button"
+                        >
                             View all →
                         </button>
 
+
                     </div>
+
 
 
                     <div class="activity-list">
 
 
+
+                        <!-- DEPOSIT -->
+
                         <div class="activity-item">
+
 
                             <div class="activity-icon deposit">
                                 ↓
                             </div>
 
+
                             <div class="activity-details">
 
-                                <strong>Funds added</strong>
+                                <strong>
+                                    Funds added
+                                </strong>
 
                                 <span>
                                     Today, 10:42 AM
@@ -366,22 +719,31 @@
 
                             </div>
 
+
                             <div class="activity-amount positive">
                                 +$500.00
                             </div>
 
+
                         </div>
 
 
+
+                        <!-- SETTLED -->
+
                         <div class="activity-item">
+
 
                             <div class="activity-icon win">
                                 ✓
                             </div>
 
+
                             <div class="activity-details">
 
-                                <strong>Bet settled</strong>
+                                <strong>
+                                    Bet settled
+                                </strong>
 
                                 <span>
                                     Yesterday, 8:21 PM
@@ -389,22 +751,31 @@
 
                             </div>
 
+
                             <div class="activity-amount positive">
                                 +$245.50
                             </div>
 
+
                         </div>
 
 
+
+                        <!-- BET -->
+
                         <div class="activity-item">
+
 
                             <div class="activity-icon bet">
                                 ◈
                             </div>
 
+
                             <div class="activity-details">
 
-                                <strong>Bet placed</strong>
+                                <strong>
+                                    Bet placed
+                                </strong>
 
                                 <span>
                                     Yesterday, 7:45 PM
@@ -412,22 +783,31 @@
 
                             </div>
 
+
                             <div class="activity-amount negative">
                                 -$50.00
                             </div>
 
+
                         </div>
 
 
+
+                        <!-- WITHDRAWAL -->
+
                         <div class="activity-item">
+
 
                             <div class="activity-icon withdrawal">
                                 ↑
                             </div>
 
+
                             <div class="activity-details">
 
-                                <strong>Withdrawal</strong>
+                                <strong>
+                                    Withdrawal
+                                </strong>
 
                                 <span>
                                     2 days ago
@@ -435,22 +815,31 @@
 
                             </div>
 
+
                             <div class="activity-amount negative">
                                 -$300.00
                             </div>
 
+
                         </div>
 
 
+
+                        <!-- REWARD -->
+
                         <div class="activity-item">
+
 
                             <div class="activity-icon reward">
                                 ★
                             </div>
 
+
                             <div class="activity-details">
 
-                                <strong>Reward credited</strong>
+                                <strong>
+                                    Reward credited
+                                </strong>
 
                                 <span>
                                     3 days ago
@@ -458,252 +847,422 @@
 
                             </div>
 
+
                             <div class="activity-amount points">
                                 +250 pts
                             </div>
 
+
                         </div>
+
 
                     </div>
 
                 </div>
 
 
-                <!-- RIGHT COLUMN -->
+
+                <!-- =================================================
+                     RIGHT COLUMN
+                ================================================== -->
+
                 <div class="right-column">
 
 
+
                     <!-- PROFILE CARD -->
+
                     <div class="panel profile-card">
+
 
                         <div class="profile-cover"></div>
 
+
                         <div class="profile-card-content">
+
 
                             <div class="large-avatar">
                                 AR
                             </div>
 
-                            <h3>Alex Roberts</h3>
 
-                            <p>alex.roberts@example.com</p>
+                            <h3>
+                                Alex Roberts
+                            </h3>
+
+
+                            <p>
+                                alex.roberts@example.com
+                            </p>
+
 
                             <div class="member-badge">
                                 ★ Premium
                             </div>
 
+
                             <div class="profile-meta">
 
-                                <div>
-                                    <span>Member since</span>
-                                    <strong>Jan 2025</strong>
-                                </div>
 
                                 <div>
-                                    <span>Level</span>
-                                    <strong>Gold</strong>
+
+                                    <span>
+                                        Member since
+                                    </span>
+
+                                    <strong>
+                                        Jan 2025
+                                    </strong>
+
                                 </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Level
+                                    </span>
+
+                                    <strong>
+                                        Gold
+                                    </strong>
+
+                                </div>
+
 
                             </div>
 
-                            <button class="outline-full-btn">
+
+                            <button
+                                class="outline-full-btn"
+                                type="button"
+                            >
                                 Manage profile
                             </button>
+
 
                         </div>
 
                     </div>
 
 
-                    <!-- SECURITY -->
+
+                    <!-- SECURITY CARD -->
+
                     <div class="panel security-card">
+
 
                         <div class="panel-header compact">
 
+
                             <div>
-                                <h2>Security</h2>
-                                <p>Keep your account protected</p>
+
+                                <h2>
+                                    Security
+                                </h2>
+
+                                <p>
+                                    Keep your account protected
+                                </p>
+
                             </div>
+
 
                             <span class="secure-icon">
                                 ✓
                             </span>
 
+
                         </div>
+
 
 
                         <div class="security-row">
 
+
                             <div>
-                                <strong>Two-factor authentication</strong>
-                                <span>Extra security enabled</span>
+
+                                <strong>
+                                    Two-factor authentication
+                                </strong>
+
+                                <span>
+                                    Extra security enabled
+                                </span>
+
                             </div>
 
-                            <div class="toggle active" id="securityToggle">
+
+                            <div
+                                class="toggle active"
+                                id="securityToggle"
+                                role="button"
+                                tabindex="0"
+                                aria-label="Toggle two-factor authentication"
+                            >
+
                                 <div class="toggle-circle"></div>
+
                             </div>
+
 
                         </div>
 
 
+
                         <div class="security-row">
 
+
                             <div>
-                                <strong>Email verification</strong>
-                                <span>Verified email address</span>
+
+                                <strong>
+                                    Email verification
+                                </strong>
+
+                                <span>
+                                    Verified email address
+                                </span>
+
                             </div>
+
 
                             <span class="verified">
                                 Verified
                             </span>
 
+
                         </div>
+
 
                     </div>
 
+
                 </div>
+
 
             </div>
 
 
-            <!-- =========================
+
+            <!-- =================================================
                  RESPONSIBLE USE
-            ========================== -->
+            ================================================== -->
+
             <div class="responsible-banner">
+
 
                 <div class="responsible-icon">
                     ♥
                 </div>
 
+
                 <div>
-                    <strong>Play responsibly</strong>
+
+                    <strong>
+                        Play responsibly
+                    </strong>
+
 
                     <p>
                         Set limits and take breaks whenever you need them.
                         This demo interface does not process real-money transactions.
                     </p>
+
                 </div>
 
-                <button>
+
+                <button
+                    type="button"
+                >
                     Learn more →
                 </button>
+
 
             </div>
 
 
-            <!-- FOOTER -->
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
             <footer class="footer">
+
 
                 <span>
                     © 2026 Betya Demo
                 </span>
 
+
                 <div>
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Support</a>
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                    <a href="#">
+                        Support
+                    </a>
+
                 </div>
 
+
             </footer>
+
 
         </section>
 
     </main>
 
 
-    <!-- =========================
-         ADD FUNDS MODAL
-    ========================== -->
-<!-- =========================
-     ADD FUNDS / DEPOSIT MODAL
-========================= -->
-<div class="modal-overlay" id="fundsModal">
 
-    <div class="modal">
+    <!-- =====================================================
+         ADD FUNDS / DEPOSIT MODAL
+    ====================================================== -->
 
-        <button class="modal-close" id="closeFundsModal">
-            ×
-        </button>
+    <div
+        class="modal-overlay"
+        id="fundsModal"
+    >
 
-        <div class="modal-icon">
-            ₹
-        </div>
 
-        <h2>Add Money</h2>
+        <div class="modal">
 
-        <p>
-            Add money securely using Razorpay.
-            Payments are processed through the payment gateway.
-        </p>
 
-        <div class="demo-input">
-
-            <label for="demoAmount">
-                Amount
-            </label>
-
-            <div class="input-box">
-                <span>₹</span>
-
-                <input
-                    type="number"
-                    id="demoAmount"
-                    value="100"
-                    min="10"
-                    max="100000"
-                    step="1"
-                    inputmode="numeric"
-                >
-            </div>
-
-            <small>
-                Minimum ₹10 · Maximum ₹100,000
-            </small>
-
-        </div>
-
-        <button
-            class="primary-btn modal-btn"
-            id="demoAddBtn"
-            type="button"
-        >
-            Continue to Payment
-        </button>
-
-    </div>
-
-</div>
-
-            <button class="primary-btn modal-btn" id="demoAddBtn">
-                Add demo funds
+            <button
+                class="modal-close"
+                id="closeFundsModal"
+                type="button"
+                aria-label="Close"
+            >
+                ×
             </button>
 
+
+
+            <div class="modal-icon">
+                ₹
+            </div>
+
+
+
+            <h2>
+                Add Money
+            </h2>
+
+
+
+            <p>
+                Add money securely using Razorpay.
+                Payments are processed through the payment gateway.
+            </p>
+
+
+
+            <div class="demo-input">
+
+
+                <label for="demoAmount">
+                    Amount
+                </label>
+
+
+                <div class="input-box">
+
+
+                    <span>
+                        ₹
+                    </span>
+
+
+                    <input
+                        type="number"
+                        id="demoAmount"
+                        value="100"
+                        min="10"
+                        max="100000"
+                        step="1"
+                        inputmode="numeric"
+                    >
+
+
+                </div>
+
+
+                <small>
+                    Minimum ₹10 · Maximum ₹100,000
+                </small>
+
+
+            </div>
+
+
+
+            <button
+                class="primary-btn modal-btn"
+                id="demoAddBtn"
+                type="button"
+            >
+                Continue to Payment
+            </button>
+
+
         </div>
+
 
     </div>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          TOAST
-    ========================== -->
-    <div class="toast" id="toast">
+    ====================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+
 
         <div class="toast-icon">
             ✓
         </div>
 
+
         <div>
-            <strong id="toastTitle">Success</strong>
-            <p id="toastMessage">Action completed.</p>
+
+            <strong id="toastTitle">
+                Success
+            </strong>
+
+            <p id="toastMessage">
+                Action completed.
+            </p>
+
         </div>
+
 
     </div>
 
 
-    <!-- Main JavaScript -->
-     
+
+    <!-- =====================================================
+         RAZORPAY CHECKOUT
+    ====================================================== -->
+
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="script.js"></script>
+
+
+    <!-- =====================================================
+         MAIN JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
 
 </body>
 </html>
