@@ -1,1 +1,840 @@
+```javascript
+/* =========================================================
+   NOVABET DASHBOARD
+   Frontend interactions
+========================================================= */
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const sidebar = document.getElementById("sidebar");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    const breadcrumbTitle =
+        document.getElementById("breadcrumbTitle");
+
+    const pageTitle =
+        document.getElementById("pageTitle");
+
+    const pageDescription =
+        document.getElementById("pageDescription");
+
+    const userButton =
+        document.getElementById("userButton");
+
+    const userDropdown =
+        document.getElementById("userDropdown");
+
+    const notificationBtn =
+        document.getElementById("notificationBtn");
+
+    const refreshBtn =
+        document.getElementById("refreshBtn");
+
+    const depositBtn =
+        document.getElementById("depositBtn");
+
+    const supportBtn =
+        document.getElementById("supportBtn");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    const dropdownLogout =
+        document.getElementById("dropdownLogout");
+
+    const viewActivity =
+        document.getElementById("viewActivity");
+
+    const editProfile =
+        document.getElementById("editProfile");
+
+    const quickActions =
+        document.querySelectorAll(".quick-action");
+
+    const toast =
+        document.getElementById("toast");
+
+    const toastTitle =
+        document.getElementById("toastTitle");
+
+    const toastMessage =
+        document.getElementById("toastMessage");
+
+    const closeToast =
+        document.getElementById("closeToast");
+
+    const modal =
+        document.getElementById("modal");
+
+    const modalClose =
+        document.getElementById("modalClose");
+
+    const modalConfirm =
+        document.getElementById("modalConfirm");
+
+    const modalTitle =
+        document.getElementById("modalTitle");
+
+    const modalDescription =
+        document.getElementById("modalDescription");
+
+    const amountInput =
+        document.getElementById("amountInput");
+
+
+    /* =====================================================
+       PAGE DATA
+    ===================================================== */
+
+    const pageData = {
+
+        overview: {
+
+            title: "Welcome back, Alex",
+
+            description:
+                "Here's what's happening with your account today."
+
+        },
+
+        activity: {
+
+            title: "Activity",
+
+            description:
+                "Review your recent account activity."
+
+        },
+
+        wallet: {
+
+            title: "Wallet",
+
+            description:
+                "Manage your balance and transactions."
+
+        },
+
+        rewards: {
+
+            title: "Rewards",
+
+            description:
+                "Track your rewards and membership benefits."
+
+        },
+
+        profile: {
+
+            title: "Your profile",
+
+            description:
+                "Manage your personal information."
+
+        },
+
+        security: {
+
+            title: "Security",
+
+            description:
+                "Keep your account safe and protected."
+
+        },
+
+        settings: {
+
+            title: "Settings",
+
+            description:
+                "Customize your dashboard experience."
+
+        }
+
+    };
+
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+
+    navItems.forEach(item => {
+
+        item.addEventListener("click", event => {
+
+            event.preventDefault();
+
+            const page =
+                item.dataset.page;
+
+            showPage(page);
+
+            sidebar.classList.remove("open");
+
+        });
+
+    });
+
+
+    function showPage(pageName) {
+
+        navItems.forEach(item => {
+
+            item.classList.toggle(
+                "active",
+                item.dataset.page === pageName
+            );
+
+        });
+
+
+        pages.forEach(page => {
+
+            page.classList.remove(
+                "active-page"
+            );
+
+        });
+
+
+        const selectedPage =
+            document.getElementById(
+                `${pageName}Page`
+            );
+
+
+        if (selectedPage) {
+
+            selectedPage.classList.add(
+                "active-page"
+            );
+
+        }
+
+
+        const data =
+            pageData[pageName];
+
+
+        if (data) {
+
+            pageTitle.textContent =
+                data.title;
+
+            pageDescription.textContent =
+                data.description;
+
+            breadcrumbTitle.textContent =
+                pageName.charAt(0).toUpperCase()
+                + pageName.slice(1);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    mobileMenu.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       USER DROPDOWN
+    ===================================================== */
+
+    userButton.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+            userDropdown.classList.toggle(
+                "show"
+            );
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        event => {
+
+            if (
+                !event.target.closest(
+                    ".user-menu"
+                )
+            ) {
+
+                userDropdown.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(
+        title,
+        message
+    ) {
+
+        toastTitle.textContent =
+            title;
+
+        toastMessage.textContent =
+            message;
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                () => {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3500
+            );
+
+    }
+
+
+    closeToast.addEventListener(
+        "click",
+        () => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       NOTIFICATION
+    ===================================================== */
+
+    notificationBtn.addEventListener(
+        "click",
+        () => {
+
+            showToast(
+                "Notifications",
+                "You have 3 new account updates."
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       REFRESH
+    ===================================================== */
+
+    refreshBtn.addEventListener(
+        "click",
+        () => {
+
+            const icon =
+                refreshBtn.querySelector(
+                    "i"
+                );
+
+
+            icon.classList.add(
+                "fa-spin"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    icon.classList.remove(
+                        "fa-spin"
+                    );
+
+
+                    showToast(
+                        "Dashboard refreshed",
+                        "Your account information is up to date."
+                    );
+
+                },
+                800
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    function openModal(
+        type = "deposit"
+    ) {
+
+        if (type === "deposit") {
+
+            modalTitle.textContent =
+                "Add funds";
+
+            modalDescription.textContent =
+                "Enter the amount you'd like to add.";
+
+            modalConfirm.textContent =
+                "Continue";
+
+            document
+                .querySelector(".modal-icon i")
+                .className =
+                "fa-solid fa-wallet";
+
+        }
+
+
+        if (type === "withdraw") {
+
+            modalTitle.textContent =
+                "Withdraw funds";
+
+            modalDescription.textContent =
+                "Enter the amount you'd like to withdraw.";
+
+            modalConfirm.textContent =
+                "Request withdrawal";
+
+            document
+                .querySelector(".modal-icon i")
+                .className =
+                "fa-solid fa-arrow-up";
+
+        }
+
+
+        amountInput.value = "";
+
+        modal.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            () => {
+
+                amountInput.focus();
+
+            },
+            200
+        );
+
+    }
+
+
+    function closeModal() {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    depositBtn.addEventListener(
+        "click",
+        () => {
+
+            openModal(
+                "deposit"
+            );
+
+        }
+    );
+
+
+    modalClose.addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    modal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    modalConfirm.addEventListener(
+        "click",
+        () => {
+
+            const amount =
+                Number(
+                    amountInput.value
+                );
+
+
+            if (
+                !amount ||
+                amount <= 0
+            ) {
+
+                showToast(
+                    "Enter an amount",
+                    "Please enter a valid amount to continue."
+                );
+
+                return;
+
+            }
+
+
+            const formatted =
+                new Intl.NumberFormat(
+                    "en-IN",
+                    {
+                        style: "currency",
+                        currency: "INR",
+                        maximumFractionDigits: 2
+                    }
+                ).format(
+                    amount
+                );
+
+
+            const isWithdraw =
+                modalTitle.textContent
+                === "Withdraw funds";
+
+
+            closeModal();
+
+
+            showToast(
+
+                isWithdraw
+                    ? "Withdrawal requested"
+                    : "Funds added",
+
+                isWithdraw
+                    ? `${formatted} withdrawal request created.`
+                    : `${formatted} has been added to your account.`
+
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       QUICK ACTIONS
+    ===================================================== */
+
+    quickActions.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const action =
+                        button.dataset.action;
+
+
+                    if (
+                        action === "deposit"
+                    ) {
+
+                        openModal(
+                            "deposit"
+                        );
+
+                    }
+
+
+                    else if (
+                        action === "withdraw"
+                    ) {
+
+                        openModal(
+                            "withdraw"
+                        );
+
+                    }
+
+
+                    else if (
+                        action === "security"
+                    ) {
+
+                        showPage(
+                            "security"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       VIEW ACTIVITY
+    ===================================================== */
+
+    viewActivity.addEventListener(
+        "click",
+        () => {
+
+            showPage(
+                "activity"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       EDIT PROFILE
+    ===================================================== */
+
+    editProfile.addEventListener(
+        "click",
+        () => {
+
+            showPage(
+                "profile"
+            );
+
+            showToast(
+                "Profile",
+                "You can edit your information here."
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       SUPPORT
+    ===================================================== */
+
+    supportBtn.addEventListener(
+        "click",
+        () => {
+
+            showToast(
+                "Support",
+                "Our support team is available to help."
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    function logout() {
+
+        showToast(
+            "Demo logout",
+            "This is a frontend-only dashboard."
+        );
+
+    }
+
+
+    logoutBtn.addEventListener(
+        "click",
+        logout
+    );
+
+
+    dropdownLogout.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            logout();
+
+        }
+    );
+
+
+    /* =====================================================
+       PROFILE FORM
+    ===================================================== */
+
+    const settingsForm =
+        document.querySelector(
+            ".settings-form"
+        );
+
+
+    if (settingsForm) {
+
+        const saveButton =
+            settingsForm.querySelector(
+                ".primary-btn"
+            );
+
+
+        saveButton.addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "Profile saved",
+                    "Your profile changes have been saved locally."
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SWITCHES
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".switch input"
+        )
+        .forEach(
+            checkbox => {
+
+                checkbox.addEventListener(
+                    "change",
+                    () => {
+
+                        showToast(
+                            "Preference updated",
+                            checkbox.checked
+                                ? "Notification enabled."
+                                : "Notification disabled."
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       PROMO BUTTON
+    ===================================================== */
+
+    const promoButton =
+        document.querySelector(
+            ".promo-btn"
+        );
+
+
+    if (promoButton) {
+
+        promoButton.addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "Membership benefits",
+                    "More Gold membership benefits coming soon."
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       INITIAL STATE
+    ===================================================== */
+
+    showPage(
+        "overview"
+    );
+
+});
+```
 
