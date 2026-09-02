@@ -260,22 +260,313 @@ document.addEventListener("DOMContentLoaded", () => {
        DEMO BALANCE
     ========================================== */
 
-    if (demoAddBtn) {
+    /* =========================================
+   RAZORPAY TEST MODE DEPOSIT
+========================================= */
 
-        demoAddBtn.addEventListener("click", () => {
+const DEMO_USER_ID = "demo-user-001";
 
-            const amount =
-                parseFloat(demoAmount?.value);
+if (demoAddBtn) {
 
-            if (!amount || amount <= 0) {
+    demoAddBtn.addEventListener("click", async () => {
 
-                showToast(
-                    "Invalid amount",
-                    "Please enter a valid demo amount."
+        const amount = parseFloat(demoAmount?.value);
+
+        /* -----------------------------
+           Validate amount
+        ----------------------------- */
+
+        if (
+            !Number.isFinite(amount) ||
+            amount < 10 ||
+            amount > 100000
+        ) {
+
+            showToast(
+                "Invalid amount",
+                "Please enter an amount between ₹10 and ₹100,000."
+            );
+
+            return;
+        }
+
+
+        /* -----------------------------
+           Disable button
+        ----------------------------- */
+
+        const originalText =
+            demoAddBtn.textContent;
+
+        demoAddBtn.disabled = true;
+
+        demoAddBtn.textContent =
+            "Creating payment...";
+
+
+        try {
+
+            /* -----------------------------
+               CREATE RAZORPAY ORDER
+            ----------------------------- */
+
+            const createResponse = await fetch(
+                `${API_BASE_URL}/api/deposit/create`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        amount: amount,
+                        userId: DEMO_USER_ID
+                    })
+                }
+            );
+
+
+            const createData =
+                await createResponse.json();
+
+
+            if (!createResponse.ok || !createData.success) {
+
+                throw new Error(
+                    createData.message ||
+                    "Unable to create payment order."
                 );
 
-                return;
             }
+
+
+            /* -----------------------------
+               CHECK RAZORPAY CHECKOUT
+            ----------------------------- */
+
+            if (typeof Razorpay === "undefined") {
+
+                throw new Error(
+                    "Razorpay Checkout could not be loaded."
+                );
+
+            }
+
+
+            /* -----------------------------
+               RAZORPAY OPTIONS
+            ----------------------------- */
+
+            const options = {
+
+                key: createData.keyId,
+
+                amount: createData.amountInPaise,
+
+                currency: createData.currency || "INR",
+
+                name: "Account Payments Demo",
+
+                description: "Test Mode Deposit",
+
+                order_id: createData.orderId,
+
+
+                /* -------------------------
+                   PAYMENT SUCCESS
+                ------------------------- */
+
+                handler: async function (response) {
+
+                    try {
+
+                        showToast(
+                            "Verifying payment",
+                            "Please wait while we verify your payment..."
+                        );
+
+
+                        /* ---------------------
+                           VERIFY PAYMENT
+                        --------------------- */
+
+                        const verifyResponse =
+                            await fetch(
+                                `${API_BASE_URL}/api/deposit/verify`,
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+
+                                    body: JSON.stringify({
+
+                                        razorpay_order_id:
+                                            response.razorpay_order_id,
+
+                                        razorpay_payment_id:
+                                            response.razorpay_payment_id,
+
+                                        razorpay_signature:
+                                            response.razorpay_signature
+
+                                    })
+                                }
+                            );
+
+
+                        const verifyData =
+                            await verifyResponse.json();
+
+
+                        if (
+                            !verifyResponse.ok ||
+                            !verifyData.success
+                        ) {
+
+                            throw new Error(
+                                verifyData.message ||
+                                "Payment verification failed."
+                            );
+
+                        }
+
+
+                        /* ---------------------
+                           PAYMENT VERIFIED
+                        --------------------- */
+
+                        closeFundsModalFunction();
+
+
+                        showToast(
+                            "Payment successful",
+                            `Payment verified. ID: ${response.razorpay_payment_id}`
+                        );
+
+
+                        console.log(
+                            "Payment verified:",
+                            verifyData
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Payment verification error:",
+                            error
+                        );
+
+                        showToast(
+                            "Verification failed",
+                            error.message ||
+                            "Unable to verify payment."
+                        );
+
+                    }
+
+                },
+
+
+                /* -------------------------
+                   CHECKOUT CLOSED
+                ------------------------- */
+
+                modal: {
+
+                    ondismiss: function () {
+
+                        console.log(
+                            "Razorpay checkout closed."
+                        );
+
+                    }
+
+                },
+
+
+                /* -------------------------
+                   PREFILL
+                ------------------------- */
+
+                prefill: {
+
+                    name: "Demo User",
+
+                    email: "demo@example.com"
+
+                },
+
+
+                theme: {
+
+                    color: "#111827"
+
+                }
+
+            };
+
+
+            /* -----------------------------
+               OPEN RAZORPAY
+            ----------------------------- */
+
+            const razorpay =
+                new Razorpay(options);
+
+
+            razorpay.on(
+                "payment.failed",
+                function (response) {
+
+                    console.error(
+                        "Payment failed:",
+                        response.error
+                    );
+
+
+                    showToast(
+                        "Payment failed",
+                        response.error?.description ||
+                        "The test payment was not completed."
+                    );
+
+                }
+            );
+
+
+            razorpay.open();
+
+
+        } catch (error) {
+
+            console.error(
+                "Deposit error:",
+                error
+            );
+
+
+            showToast(
+                "Payment error",
+                error.message ||
+                "Unable to start payment."
+            );
+
+        } finally {
+
+            demoAddBtn.disabled = false;
+
+            demoAddBtn.textContent =
+                originalText;
+
+        }
+
+    });
+
+}
 
 
             /*
