@@ -2,6 +2,7 @@
    BETYA DEMO DASHBOARD
    Main JavaScript
 ========================================= */
+const API_BASE_URL = "https://gamblingsite.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
 
