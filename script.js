@@ -559,3 +559,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
 
 });
+async function checkBackendConnection() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/health`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    console.log("✅ Backend connected:", data);
+  } catch (error) {
+    console.error("❌ Backend connection failed:", error);
+  }
+}
+
+checkBackendConnection();
