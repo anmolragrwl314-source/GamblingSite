@@ -1,251 +1,101 @@
-/* =========================================
-   BETYA DEMO DASHBOARD
-   Main JavaScript
-========================================= */
+/* =========================================================
+   GAMBLINGSITE - FRONTEND JAVASCRIPT
+   Razorpay Test Mode + Dashboard Interactions
+   ========================================================= */
+
 const API_BASE_URL = "https://gamblingsite.onrender.com";
+const DEMO_USER_ID = "demo-user-001";
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =========================================
+    /* =====================================================
        ELEMENTS
-    ========================================= */
+       ===================================================== */
 
-    const sidebar = document.getElementById("sidebar");
-    const menuButton = document.getElementById("menuButton");
-    const closeSidebar = document.getElementById("closeSidebar");
-    const mobileOverlay = document.getElementById("mobileOverlay");
+    const addFundsBtn = document.getElementById("addFundsBtn");
+    const fundsModal = document.getElementById("fundsModal");
+    const closeFundsModal = document.getElementById("closeFundsModal");
+    const demoAddBtn = document.getElementById("demoAddBtn");
+    const demoAmount = document.getElementById("demoAmount");
 
-    const profileButton = document.getElementById("profileButton");
-    const profileDropdown = document.getElementById("profileDropdown");
+    const withdrawBtn = document.getElementById("withdrawBtn");
 
-    const notificationBtn =
-        document.getElementById("notificationBtn");
+    const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+    const mobileOverlay = document.querySelector(".mobile-overlay");
 
-    const logoutBtn =
-        document.getElementById("logoutBtn");
+    const navLinks = document.querySelectorAll(".nav-link");
 
-    const dropdownLogout =
-        document.getElementById("dropdownLogout");
-
-    const addFundsBtn =
-        document.getElementById("addFundsBtn");
-
-    const fundsModal =
-        document.getElementById("fundsModal");
-
-    const closeFundsModal =
-        document.getElementById("closeFundsModal");
-
-    const demoAddBtn =
-        document.getElementById("demoAddBtn");
-
-    const demoAmount =
-        document.getElementById("demoAmount");
-
-    const securityToggle =
-        document.getElementById("securityToggle");
-
-    const toast =
-        document.getElementById("toast");
-
-    const toastTitle =
-        document.getElementById("toastTitle");
-
-    const toastMessage =
-        document.getElementById("toastMessage");
-
-
-    /* =========================================
-       MOBILE SIDEBAR
-    ========================================= */
-
-    function openSidebar() {
-
-        if (!sidebar) return;
-
-        sidebar.classList.add("open");
-
-        if (mobileOverlay) {
-            mobileOverlay.classList.add("show");
-        }
-
-        document.body.style.overflow = "hidden";
-    }
-
-
-    function closeMobileSidebar() {
-
-        if (!sidebar) return;
-
-        sidebar.classList.remove("open");
-
-        if (mobileOverlay) {
-            mobileOverlay.classList.remove("show");
-        }
-
-        document.body.style.overflow = "";
-    }
-
-
-    if (menuButton) {
-        menuButton.addEventListener("click", openSidebar);
-    }
-
-
-    if (closeSidebar) {
-        closeSidebar.addEventListener(
-            "click",
-            closeMobileSidebar
-        );
-    }
-
-
-    if (mobileOverlay) {
-        mobileOverlay.addEventListener(
-            "click",
-            closeMobileSidebar
-        );
-    }
-
-
-    /* =========================================
-       CLOSE SIDEBAR AFTER NAVIGATION
-    ========================================== */
-
-    document.querySelectorAll(".nav-item").forEach(item => {
-
-        item.addEventListener("click", event => {
-
-            event.preventDefault();
-
-            document.querySelectorAll(".nav-item")
-                .forEach(nav => nav.classList.remove("active"));
-
-            item.classList.add("active");
-
-            if (window.innerWidth <= 760) {
-                closeMobileSidebar();
-            }
-
-            const pageName =
-                item.querySelector("span:last-child")?.textContent
-                || "Page";
-
-            showToast(
-                "Navigation",
-                `${pageName} selected`
-            );
-        });
-
-    });
-
-
-    /* =========================================
-       PROFILE DROPDOWN
-    ========================================== */
-
-    if (profileButton && profileDropdown) {
-
-        profileButton.addEventListener("click", event => {
-
-            event.stopPropagation();
-
-            profileDropdown.classList.toggle("show");
-
-        });
-
-    }
-
-
-    document.addEventListener("click", event => {
-
-        if (
-            profileDropdown &&
-            !profileDropdown.contains(event.target) &&
-            !profileButton?.contains(event.target)
-        ) {
-
-            profileDropdown.classList.remove("show");
-
-        }
-
-    });
-
-
-    /* =========================================
-       NOTIFICATION
-    ========================================== */
-
-    if (notificationBtn) {
-
-        notificationBtn.addEventListener("click", () => {
-
-            showToast(
-                "Notifications",
-                "You have 3 new account updates."
-            );
-
-        });
-
-    }
-
-
-    /* =========================================
-       ADD FUNDS MODAL
-    ========================================== */
+    /* =====================================================
+       MODAL FUNCTIONS
+       ===================================================== */
 
     function openFundsModal() {
-
-        if (!fundsModal) return;
+        if (!fundsModal) {
+            console.error("❌ fundsModal not found");
+            return;
+        }
 
         fundsModal.classList.add("show");
+        document.body.classList.add("modal-open");
 
-        document.body.style.overflow = "hidden";
-
-        setTimeout(() => {
-
-            if (demoAmount) {
-                demoAmount.focus();
-                demoAmount.select();
-            }
-
-        }, 150);
+        if (demoAmount) {
+            demoAmount.focus();
+            demoAmount.select();
+        }
     }
 
 
     function closeFundsModalFunction() {
-
         if (!fundsModal) return;
 
         fundsModal.classList.remove("show");
-
-        document.body.style.overflow = "";
+        document.body.classList.remove("modal-open");
     }
 
+
+    /* =====================================================
+       ADD FUNDS BUTTON
+       ===================================================== */
 
     if (addFundsBtn) {
 
-        addFundsBtn.addEventListener(
-            "click",
-            openFundsModal
+        addFundsBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            openFundsModal();
+        });
+
+        console.log("✅ Add Funds button connected");
+
+    } else {
+
+        console.error(
+            "❌ Add Funds button not found. Check id='addFundsBtn'"
         );
 
     }
 
+
+    /* =====================================================
+       CLOSE MODAL
+       ===================================================== */
 
     if (closeFundsModal) {
 
-        closeFundsModal.addEventListener(
-            "click",
-            closeFundsModalFunction
-        );
+        closeFundsModal.addEventListener("click", () => {
+            closeFundsModalFunction();
+        });
 
     }
 
 
+    /* =====================================================
+       CLOSE MODAL WHEN CLICKING OUTSIDE
+       ===================================================== */
+
     if (fundsModal) {
 
-        fundsModal.addEventListener("click", event => {
+        fundsModal.addEventListener("click", (event) => {
 
             if (event.target === fundsModal) {
                 closeFundsModalFunction();
@@ -256,143 +106,201 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =========================================
-       DEMO BALANCE
-    ========================================== */
+    /* =====================================================
+       ESCAPE KEY CLOSE
+       ===================================================== */
 
-    /* =========================================
-   RAZORPAY TEST MODE DEPOSIT
-========================================= */
+    document.addEventListener("keydown", (event) => {
 
-const DEMO_USER_ID = "demo-user-001";
-
-if (demoAddBtn) {
-
-    demoAddBtn.addEventListener("click", async () => {
-
-        const amount = parseFloat(demoAmount?.value);
-
-        /* -----------------------------
-           Validate amount
-        ----------------------------- */
-
-        if (
-            !Number.isFinite(amount) ||
-            amount < 10 ||
-            amount > 100000
-        ) {
-
-            showToast(
-                "Invalid amount",
-                "Please enter an amount between ₹10 and ₹100,000."
-            );
-
-            return;
+        if (event.key === "Escape") {
+            closeFundsModalFunction();
         }
 
-
-        /* -----------------------------
-           Disable button
-        ----------------------------- */
-
-        const originalText =
-            demoAddBtn.textContent;
-
-        demoAddBtn.disabled = true;
-
-        demoAddBtn.textContent =
-            "Creating payment...";
+    });
 
 
-        try {
+    /* =====================================================
+       RAZORPAY PAYMENT
+       ===================================================== */
 
-            /* -----------------------------
-               CREATE RAZORPAY ORDER
-            ----------------------------- */
+    if (demoAddBtn) {
 
-            const createResponse = await fetch(
-                `${API_BASE_URL}/api/deposit/create`,
-                {
-                    method: "POST",
+        demoAddBtn.addEventListener("click", async () => {
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+            /* ---------------------------------------------
+               GET AMOUNT
+               --------------------------------------------- */
 
-                    body: JSON.stringify({
-                        amount: amount,
-                        userId: DEMO_USER_ID
-                    })
-                }
+            const amount = Number(
+                demoAmount ? demoAmount.value : 0
             );
 
 
-            const createData =
-                await createResponse.json();
+            /* ---------------------------------------------
+               VALIDATE AMOUNT
+               --------------------------------------------- */
 
+            if (!Number.isFinite(amount)) {
 
-            if (!createResponse.ok || !createData.success) {
-
-                throw new Error(
-                    createData.message ||
-                    "Unable to create payment order."
+                showToast(
+                    "Invalid amount",
+                    "Please enter a valid amount."
                 );
 
+                return;
             }
 
 
-            /* -----------------------------
-               CHECK RAZORPAY CHECKOUT
-            ----------------------------- */
+            if (amount < 10) {
+
+                showToast(
+                    "Minimum amount is ₹10",
+                    "Please enter at least ₹10."
+                );
+
+                return;
+            }
+
+
+            if (amount > 100000) {
+
+                showToast(
+                    "Maximum amount is ₹100,000",
+                    "Please enter a smaller amount."
+                );
+
+                return;
+            }
+
+
+            /* ---------------------------------------------
+               CHECK RAZORPAY SCRIPT
+               --------------------------------------------- */
 
             if (typeof Razorpay === "undefined") {
 
-                throw new Error(
-                    "Razorpay Checkout could not be loaded."
+                showToast(
+                    "Payment gateway unavailable",
+                    "Razorpay could not be loaded. Refresh the page and try again."
                 );
 
+                console.error(
+                    "❌ Razorpay Checkout script not loaded"
+                );
+
+                return;
             }
 
 
-            /* -----------------------------
-               RAZORPAY OPTIONS
-            ----------------------------- */
+            /* ---------------------------------------------
+               DISABLE BUTTON
+               --------------------------------------------- */
 
-            const options = {
+            const originalText = demoAddBtn.innerText;
 
-                key: createData.keyId,
-
-                amount: createData.amountInPaise,
-
-                currency: createData.currency || "INR",
-
-                name: "Account Payments Demo",
-
-                description: "Test Mode Deposit",
-
-                order_id: createData.orderId,
+            demoAddBtn.disabled = true;
+            demoAddBtn.innerText = "Creating payment...";
 
 
-                /* -------------------------
-                   PAYMENT SUCCESS
-                ------------------------- */
+            try {
 
-                handler: async function (response) {
+                /* =========================================
+                   STEP 1
+                   CREATE ORDER ON BACKEND
+                   ========================================= */
 
-                    try {
+                const createResponse = await fetch(
+                    `${API_BASE_URL}/api/deposit/create`,
+                    {
+                        method: "POST",
 
-                        showToast(
-                            "Verifying payment",
-                            "Please wait while we verify your payment..."
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            amount: amount,
+                            userId: DEMO_USER_ID
+                        })
+                    }
+                );
+
+
+                const createData = await createResponse.json();
+
+
+                if (!createResponse.ok || !createData.success) {
+
+                    throw new Error(
+                        createData.message ||
+                        "Unable to create payment order."
+                    );
+
+                }
+
+
+                console.log(
+                    "✅ Razorpay order created:",
+                    createData
+                );
+
+
+                /* =========================================
+                   STEP 2
+                   RAZORPAY CHECKOUT OPTIONS
+                   ========================================= */
+
+                const options = {
+
+                    key: createData.keyId,
+
+                    amount: createData.amount,
+
+                    currency: createData.currency || "INR",
+
+                    name: "GamblingSite",
+
+                    description: "Add Funds",
+
+                    order_id: createData.orderId,
+
+
+                    prefill: {
+                        name: "Demo User",
+                        email: "demo@example.com"
+                    },
+
+
+                    notes: {
+                        userId: DEMO_USER_ID
+                    },
+
+
+                    theme: {
+                        color: "#111827"
+                    },
+
+
+                    /* =====================================
+                       SUCCESS HANDLER
+                       ===================================== */
+
+                    handler: async function (response) {
+
+                        console.log(
+                            "✅ Razorpay payment completed:",
+                            response
                         );
 
 
-                        /* ---------------------
-                           VERIFY PAYMENT
-                        --------------------- */
+                        try {
 
-                        const verifyResponse =
-                            await fetch(
+                            /* =============================
+                               STEP 3
+                               VERIFY PAYMENT ON SERVER
+                               ============================= */
+
+                            const verifyResponse = await fetch(
                                 `${API_BASE_URL}/api/deposit/verify`,
                                 {
                                     method: "POST",
@@ -402,6 +310,8 @@ if (demoAddBtn) {
                                     },
 
                                     body: JSON.stringify({
+
+                                        userId: DEMO_USER_ID,
 
                                         razorpay_order_id:
                                             response.razorpay_order_id,
@@ -417,193 +327,291 @@ if (demoAddBtn) {
                             );
 
 
-                        const verifyData =
-                            await verifyResponse.json();
+                            const verifyData =
+                                await verifyResponse.json();
 
 
-                        if (
-                            !verifyResponse.ok ||
-                            !verifyData.success
-                        ) {
+                            if (
+                                !verifyResponse.ok ||
+                                !verifyData.success
+                            ) {
 
-                            throw new Error(
-                                verifyData.message ||
-                                "Payment verification failed."
+                                throw new Error(
+                                    verifyData.message ||
+                                    "Payment verification failed."
+                                );
+
+                            }
+
+
+                            /* =============================
+                               PAYMENT VERIFIED
+                               ============================= */
+
+                            closeFundsModalFunction();
+
+
+                            showToast(
+                                "Payment successful",
+                                `₹${amount.toFixed(2)} payment verified successfully.`
+                            );
+
+
+                            console.log(
+                                "✅ Payment verified:",
+                                verifyData
+                            );
+
+
+                        } catch (error) {
+
+                            console.error(
+                                "❌ Verification error:",
+                                error
+                            );
+
+
+                            showToast(
+                                "Verification failed",
+                                error.message ||
+                                "Payment could not be verified."
                             );
 
                         }
 
-
-                        /* ---------------------
-                           PAYMENT VERIFIED
-                        --------------------- */
-
-                        closeFundsModalFunction();
+                    },
 
 
-                        showToast(
-                            "Payment successful",
-                            `Payment verified. ID: ${response.razorpay_payment_id}`
-                        );
+                    /* =====================================
+                       PAYMENT FAILED
+                       ===================================== */
+
+                    modal: {
+
+                        ondismiss: function () {
+
+                            demoAddBtn.disabled = false;
+                            demoAddBtn.innerText = originalText;
+
+                            console.log(
+                                "Payment window closed"
+                            );
+
+                        }
+
+                    }
+
+                };
 
 
-                        console.log(
-                            "Payment verified:",
-                            verifyData
-                        );
+                /* =========================================
+                   OPEN RAZORPAY CHECKOUT
+                   ========================================= */
+
+                const razorpay = new Razorpay(options);
 
 
-                    } catch (error) {
+                razorpay.on(
+                    "payment.failed",
+                    function (response) {
 
                         console.error(
-                            "Payment verification error:",
-                            error
+                            "❌ Razorpay payment failed:",
+                            response.error
                         );
+
 
                         showToast(
-                            "Verification failed",
-                            error.message ||
-                            "Unable to verify payment."
+                            "Payment failed",
+                            response.error?.description ||
+                            "The payment was not completed."
                         );
 
-                    }
 
-                },
-
-
-                /* -------------------------
-                   CHECKOUT CLOSED
-                ------------------------- */
-
-                modal: {
-
-                    ondismiss: function () {
-
-                        console.log(
-                            "Razorpay checkout closed."
-                        );
+                        demoAddBtn.disabled = false;
+                        demoAddBtn.innerText = originalText;
 
                     }
-
-                },
-
-
-                /* -------------------------
-                   PREFILL
-                ------------------------- */
-
-                prefill: {
-
-                    name: "Demo User",
-
-                    email: "demo@example.com"
-
-                },
+                );
 
 
-                theme: {
-
-                    color: "#111827"
-
-                }
-
-            };
+                razorpay.open();
 
 
-            /* -----------------------------
-               OPEN RAZORPAY
-            ----------------------------- */
-
-            const razorpay =
-                new Razorpay(options);
+                /* Restore button state */
+                demoAddBtn.disabled = false;
+                demoAddBtn.innerText = originalText;
 
 
-            razorpay.on(
-                "payment.failed",
-                function (response) {
+            } catch (error) {
 
-                    console.error(
-                        "Payment failed:",
-                        response.error
-                    );
+                console.error(
+                    "❌ Payment creation error:",
+                    error
+                );
 
 
-                    showToast(
-                        "Payment failed",
-                        response.error?.description ||
-                        "The test payment was not completed."
-                    );
-
-                }
-            );
+                showToast(
+                    "Payment error",
+                    error.message ||
+                    "Something went wrong while starting the payment."
+                );
 
 
-            razorpay.open();
-
-
-        } catch (error) {
-
-            console.error(
-                "Deposit error:",
-                error
-            );
-
-
-            showToast(
-                "Payment error",
-                error.message ||
-                "Unable to start payment."
-            );
-
-        } finally {
-
-            demoAddBtn.disabled = false;
-
-            demoAddBtn.textContent =
-                originalText;
-
-        }
-
-    });
-
-}
-
-
-            /*
-                This is only a front-end demo.
-
-                We update the displayed balance locally.
-                No real payment or transaction happens.
-            */
-
-            const balanceValue =
-                document.querySelector(".balance-value");
-
-            if (balanceValue) {
-
-                const newBalance =
-                    2480.50 + amount;
-
-                const formatted =
-                    newBalance.toLocaleString(
-                        "en-US",
-                        {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        }
-                    );
-
-                balanceValue.innerHTML =
-                    `$${formatted}`;
+                demoAddBtn.disabled = false;
+                demoAddBtn.innerText = originalText;
 
             }
 
+        });
 
-            closeFundsModalFunction();
+    } else {
 
-            showToast(
-                "Demo funds added",
-                `$${amount.toFixed(2)} added to your demo balance.`
+        console.error(
+            "❌ demoAddBtn not found in HTML"
+        );
+
+    }
+
+
+    /* =====================================================
+       WITHDRAW BUTTON
+       ===================================================== */
+
+    if (withdrawBtn) {
+
+        withdrawBtn.addEventListener("click", async () => {
+
+            const amountText = prompt(
+                "Enter withdrawal amount in ₹:"
+            );
+
+
+            if (amountText === null) {
+                return;
+            }
+
+
+            const amount = Number(amountText);
+
+
+            if (!Number.isFinite(amount) || amount <= 0) {
+
+                showToast(
+                    "Invalid amount",
+                    "Please enter a valid withdrawal amount."
+                );
+
+                return;
+            }
+
+
+            if (amount < 10) {
+
+                showToast(
+                    "Minimum withdrawal is ₹10",
+                    "Please enter at least ₹10."
+                );
+
+                return;
+            }
+
+
+            if (amount > 100000) {
+
+                showToast(
+                    "Maximum withdrawal is ₹100,000",
+                    "Please enter a smaller amount."
+                );
+
+                return;
+            }
+
+
+            try {
+
+                withdrawBtn.disabled = true;
+                withdrawBtn.innerText = "Processing...";
+
+
+                const response = await fetch(
+                    `${API_BASE_URL}/api/withdrawal/create`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            amount: amount,
+                            userId: DEMO_USER_ID
+                        })
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Withdrawal request failed."
+                    );
+
+                }
+
+
+                showToast(
+                    "Withdrawal request submitted",
+                    `₹${amount.toFixed(2)} withdrawal request created.`
+                );
+
+
+                console.log(
+                    "✅ Withdrawal request:",
+                    data
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "❌ Withdrawal error:",
+                    error
+                );
+
+
+                showToast(
+                    "Withdrawal failed",
+                    error.message ||
+                    "Unable to create withdrawal request."
+                );
+
+            } finally {
+
+                withdrawBtn.disabled = false;
+                withdrawBtn.innerText = "Withdraw";
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       MOBILE MENU
+       ===================================================== */
+
+    if (mobileMenuBtn) {
+
+        mobileMenuBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle(
+                "mobile-menu-open"
             );
 
         });
@@ -611,259 +619,270 @@ if (demoAddBtn) {
     }
 
 
-    /* =========================================
-       SECURITY TOGGLE
-    ========================================== */
+    if (mobileOverlay) {
 
-    if (securityToggle) {
+        mobileOverlay.addEventListener("click", () => {
 
-        securityToggle.addEventListener("click", () => {
-
-            const isActive =
-                securityToggle.classList.contains("active");
-
-            if (isActive) {
-
-                securityToggle.classList.remove("active");
-
-                showToast(
-                    "2FA disabled",
-                    "Two-factor authentication is now off in this demo."
-                );
-
-            } else {
-
-                securityToggle.classList.add("active");
-
-                showToast(
-                    "2FA enabled",
-                    "Two-factor authentication is enabled."
-                );
-
-            }
+            document.body.classList.remove(
+                "mobile-menu-open"
+            );
 
         });
 
     }
 
 
-    /* =========================================
-       LOGOUT
-    ========================================== */
+    /* =====================================================
+       NAVIGATION LINKS
+       ===================================================== */
 
-    function handleLogout() {
+    navLinks.forEach((link) => {
 
-        showToast(
-            "Demo logout",
-            "You have been logged out of the demo."
-        );
+        link.addEventListener("click", () => {
 
-    }
-
-
-    if (logoutBtn) {
-        logoutBtn.addEventListener(
-            "click",
-            handleLogout
-        );
-    }
-
-
-    if (dropdownLogout) {
-
-        dropdownLogout.addEventListener(
-            "click",
-            handleLogout
-        );
-
-    }
-
-
-    /* =========================================
-       VIEW ALL
-    ========================================== */
-
-    document.querySelectorAll(".view-all-btn")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                showToast(
-                    "Activity",
-                    "Full activity history opened in demo mode."
-                );
-
+            navLinks.forEach((item) => {
+                item.classList.remove("active");
             });
 
-        });
+
+            link.classList.add("active");
 
 
-    /* =========================================
-       MANAGE PROFILE
-    ========================================== */
-
-    document.querySelectorAll(".outline-full-btn")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                showToast(
-                    "Profile",
-                    "Profile management opened in demo mode."
-                );
-
-            });
-
-        });
-
-
-    /* =========================================
-       RESPONSIBLE PLAY
-    ========================================== */
-
-    const responsibleButton =
-        document.querySelector(
-            ".responsible-banner button"
-        );
-
-    if (responsibleButton) {
-
-        responsibleButton.addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    "Responsible use",
-                    "Remember to set limits and take breaks."
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =========================================
-       TOAST SYSTEM
-    ========================================== */
-
-    let toastTimer;
-
-
-    function showToast(title, message) {
-
-        if (!toast) return;
-
-        if (toastTitle) {
-            toastTitle.textContent = title;
-        }
-
-        if (toastMessage) {
-            toastMessage.textContent = message;
-        }
-
-        toast.classList.add("show");
-
-        clearTimeout(toastTimer);
-
-        toastTimer = setTimeout(() => {
-
-            toast.classList.remove("show");
-
-        }, 3200);
-
-    }
-
-
-    /* =========================================
-       ESC KEY
-    ========================================== */
-
-    document.addEventListener("keydown", event => {
-
-        if (event.key === "Escape") {
-
-            closeMobileSidebar();
-
-            if (profileDropdown) {
-                profileDropdown.classList.remove("show");
-            }
-
-            closeFundsModalFunction();
-
-        }
-
-    });
-
-
-    /* =========================================
-       WINDOW RESIZE
-    ========================================== */
-
-    window.addEventListener("resize", () => {
-
-        if (window.innerWidth > 760) {
-
-            if (sidebar) {
-                sidebar.classList.remove("open");
-            }
-
-            if (mobileOverlay) {
-                mobileOverlay.classList.remove("show");
-            }
-
-            document.body.style.overflow = "";
-
-        }
-
-    });
-
-
-    /* =========================================
-       SIMPLE CARD HOVER EFFECT
-    ========================================== */
-
-    document.querySelectorAll(".stat-card")
-        .forEach(card => {
-
-            card.addEventListener(
-                "mouseenter",
-                () => {
-                    card.style.transition =
-                        "transform 0.25s ease, box-shadow 0.25s ease";
-                }
+            document.body.classList.remove(
+                "mobile-menu-open"
             );
 
         });
 
+    });
 
-    /* =========================================
-       PAGE LOADED
-    ========================================== */
+
+    /* =====================================================
+       GENERAL BUTTON ANIMATION
+       ===================================================== */
+
+    const buttons = document.querySelectorAll(
+        "button:not([disabled])"
+    );
+
+
+    buttons.forEach((button) => {
+
+        button.addEventListener("mousedown", () => {
+            button.classList.add("pressed");
+        });
+
+
+        button.addEventListener("mouseup", () => {
+            button.classList.remove("pressed");
+        });
+
+
+        button.addEventListener("mouseleave", () => {
+            button.classList.remove("pressed");
+        });
+
+    });
+
+
+    /* =====================================================
+       INITIAL CONSOLE MESSAGE
+       ===================================================== */
+
+    console.log(
+        "🚀 GamblingSite frontend loaded successfully."
+    );
+
+    console.log(
+        "🔗 Backend:",
+        API_BASE_URL
+    );
+
+});
+
+
+/* =========================================================
+   TOAST NOTIFICATION
+   ========================================================= */
+
+function showToast(title, message) {
+
+    let toastContainer =
+        document.getElementById("toastContainer");
+
+
+    /* ---------------------------------------------
+       CREATE TOAST CONTAINER IF NEEDED
+       --------------------------------------------- */
+
+    if (!toastContainer) {
+
+        toastContainer = document.createElement("div");
+
+        toastContainer.id = "toastContainer";
+
+        toastContainer.style.position = "fixed";
+        toastContainer.style.right = "20px";
+        toastContainer.style.bottom = "20px";
+        toastContainer.style.zIndex = "10000";
+        toastContainer.style.display = "flex";
+        toastContainer.style.flexDirection = "column";
+        toastContainer.style.gap = "12px";
+
+        document.body.appendChild(
+            toastContainer
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       CREATE TOAST
+       --------------------------------------------- */
+
+    const toast =
+        document.createElement("div");
+
+
+    toast.className = "custom-toast";
+
+
+    toast.innerHTML = `
+        <div class="toast-title">
+            ${escapeHtml(title)}
+        </div>
+
+        <div class="toast-message">
+            ${escapeHtml(message)}
+        </div>
+    `;
+
+
+    /* ---------------------------------------------
+       INLINE FALLBACK STYLING
+       --------------------------------------------- */
+
+    toast.style.background = "#111827";
+    toast.style.color = "#ffffff";
+    toast.style.padding = "14px 18px";
+    toast.style.borderRadius = "12px";
+    toast.style.minWidth = "260px";
+    toast.style.maxWidth = "360px";
+    toast.style.boxShadow =
+        "0 10px 30px rgba(0,0,0,0.25)";
+
+    toast.style.fontFamily =
+        "Arial, sans-serif";
+
+
+    const titleElement =
+        toast.querySelector(".toast-title");
+
+
+    const messageElement =
+        toast.querySelector(".toast-message");
+
+
+    if (titleElement) {
+
+        titleElement.style.fontWeight = "700";
+        titleElement.style.marginBottom = "4px";
+
+    }
+
+
+    if (messageElement) {
+
+        messageElement.style.fontSize = "13px";
+        messageElement.style.opacity = "0.8";
+
+    }
+
+
+    toastContainer.appendChild(toast);
+
+
+    /* ---------------------------------------------
+       AUTO REMOVE
+       --------------------------------------------- */
 
     setTimeout(() => {
 
-        console.log(
-            "Betya demo dashboard loaded successfully."
-        );
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(10px)";
+        toast.style.transition =
+            "all 0.25s ease";
 
-    }, 100);
 
-});
-async function checkBackendConnection() {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/health`);
+        setTimeout(() => {
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
+            toast.remove();
 
-    const data = await response.json();
+        }, 250);
 
-    console.log("✅ Backend connected:", data);
-  } catch (error) {
-    console.error("❌ Backend connection failed:", error);
-  }
+    }, 3500);
+
 }
 
-checkBackendConnection();
+
+/* =========================================================
+   HTML ESCAPE
+   ========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   BACKEND HEALTH CHECK
+   ========================================================= */
+
+async function checkBackendHealth() {
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/health`
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            console.log(
+                "🟢 Backend is healthy",
+                data
+            );
+
+        } else {
+
+            console.warn(
+                "🟡 Backend responded but is not healthy."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "🔴 Backend health check failed:",
+            error
+        );
+
+    }
+
+}
+
+
+checkBackendHealth();
