@@ -1,6 +1,6 @@
 /* =========================================================
    GAMBLINGSITE - FRONTEND JAVASCRIPT
-   Razorpay Test Mode + Dashboard Interactions
+Razorpay Live Payment Integration + Dashboard Interactions
    ========================================================= */
 
 const API_BASE_URL = "https://gamblingsite.onrender.com";
